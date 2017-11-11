@@ -29,7 +29,7 @@ namespace Quackathon2017
         {
 
             Choices commands = new Choices();                                           //the choices object contains the words that the Speech recognistion software will be interpreting
-            commands.Add(new String[] { "forward", "backward", "left", "right" });      //adds "say hello" and "print my name" as commands the computer will understand
+            commands.Add(new String[] { "fire" });      //adds "say hello" and "print my name" as commands the computer will understand
             GrammarBuilder gb = new GrammarBuilder();                                   //Grammerbuilder object is used to pass the commands to the Grammer object
             gb.Append(commands);                                                        //add commands to gb object
             Grammar grammer = new Grammar(gb);                                          // Grammer object is passed to the speech recognition engine 
@@ -39,7 +39,7 @@ namespace Quackathon2017
             try                                                             //stops an error ocurring if no microphone is connected
             {
                 recEngine.SetInputToDefaultAudioDevice();                   //use the current default audio input device
-                recEngine.SpeechRecognized += controlCharacter;   //attempt to recognise user speech
+                   //attempt to recognise user speech
 
             }
             catch (Exception)
@@ -59,7 +59,10 @@ namespace Quackathon2017
             {
                 switch (e.Result.Text)
                 {
-                    case "forward":
+                    case "Fire":
+                        //I am wizard, i am going to set this on fire
+                        //Damage enemy
+
                         break;
                     case "backwards":
                         break;
@@ -75,21 +78,41 @@ namespace Quackathon2017
             //Clear screen, show combat icons
             //Show starting effects from conditions
             //Do player action
-
+            playerAction();
             //Do enemy action
             //Enemy action
 
 
             //Others?
 
+            return 0;
+        }
+
+        public void playerAction()
+        {
+            recEngine.SpeechRecognized += controlCharacter;
+        }
+        public void foeAction()
+        {
+            //Do option
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
 
         }
 
-        public int playerAction()
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
 
+        }
 
-            return 0;
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //Instatiate player object
+            //Instatiate people vulture
+            //Show em both
+
         }
     }
 }
