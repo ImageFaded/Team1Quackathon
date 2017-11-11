@@ -16,5 +16,23 @@ namespace Quackathon2017
         {
             InitializeComponent();
         }
+
+        public void controlCharacter(object sender, KeyEventArgs e)
+        {
+            while (true)
+            {
+                switch (e.KeyCode)
+                {
+                    case(Keys.Up):
+                        break;
+                    case(Keys.Down):
+                        break;
+                    case(Keys.Left):
+                        break;
+                    case(Keys.Right):
+                        break;                       
+                }
+            }
+        }
     }
 }
