@@ -15,6 +15,7 @@ namespace Quackathon2017
         public Game()
         {
             MaximizeBox = false;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             PictureBox test = new PictureBox();
             Size = new Size(500, 500);
             test.Size = new Size(50, 50);
