@@ -15,10 +15,10 @@ namespace Quackathon2017
         
         public Game()
         {
-         /*   MaximizeBox = false;
+            MaximizeBox = false;
             PictureBox test = new PictureBox();
             Size = new Size(500, 500);
-            test.Size = new Size(50, 50);*/
+            test.Size = new Size(50, 50);
             InitializeComponent();
         }
 
