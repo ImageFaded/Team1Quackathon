@@ -14,6 +14,8 @@ namespace Quackathon2017
     {
         public Form1()
         {
+            //Test
+            MessageBox.Show("Test");
             InitializeComponent();
         }
     }
