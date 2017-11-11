@@ -12,30 +12,29 @@ namespace Quackathon2017
 {
     public partial class Game : Form
     {
-        
         public Game()
         {
             MaximizeBox = false;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             PictureBox test = new PictureBox();
             Size = new Size(500, 500);
             test.Size = new Size(50, 50);
             InitializeComponent();
         }
-
         public void controlCharacter(object sender, KeyEventArgs e)
         {
-            while(true)
+            while (true)
             {
                 switch (e.KeyCode)
                 {
-                    case(Keys.Up):                      
+                    case (Keys.Up):
                         break;
-                    case(Keys.Down):
+                    case (Keys.Down):
                         break;
-                    case(Keys.Left):
+                    case (Keys.Left):
                         break;
-                    case(Keys.Right):
-                        break;     
+                    case (Keys.Right):
+                        break;
                 }
             }
         }
