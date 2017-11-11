@@ -11,9 +11,11 @@ using System.Speech.Recognition;
 
 namespace Quackathon2017
 {
-
+    //Set up classes
     public partial class Game : Form
     {
+        int choice;
+
         SpeechRecognitionEngine recEngine = new SpeechRecognitionEngine();
         bool gameState = true;
         public Game()
@@ -39,7 +41,7 @@ namespace Quackathon2017
             try                                                             //stops an error ocurring if no microphone is connected
             {
                 recEngine.SetInputToDefaultAudioDevice();                   //use the current default audio input device
-                   //attempt to recognise user speech
+                                                                            //attempt to recognise user speech
 
             }
             catch (Exception)
@@ -62,7 +64,7 @@ namespace Quackathon2017
                     case "Fire":
                         //I am wizard, i am going to set this on fire
                         //Damage enemy
-
+                        choice = 1;
                         break;
                     case "backwards":
                         break;
@@ -73,12 +75,12 @@ namespace Quackathon2017
                 }
             }
         }
-        public int combat(object foe, object player, int conditions)
+        public int Combat(PeopleVulture foe, Player player, int conditions)
         {
             //Clear screen, show combat icons
             //Show starting effects from conditions
             //Do player action
-            playerAction();
+            playerAction(foe);
             //Do enemy action
             //Enemy action
 
@@ -88,9 +90,28 @@ namespace Quackathon2017
             return 0;
         }
 
-        public void playerAction()
+        public void playerAction(PeopleVulture foe)
         {
             recEngine.SpeechRecognized += controlCharacter;
+            switch (choice)
+            {
+                case 1:
+                    bool vic = foe.HealthVary(4);
+                    MessageBox.Show("DAMAGE DONE");
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+            }
+            if (choice == 1)
+            {
+                //Do damage
+
+
+            }
         }
         public void foeAction()
         {
@@ -111,8 +132,93 @@ namespace Quackathon2017
         {
             //Instatiate player object
             //Instatiate people vulture
+            PeopleVulture nonagon = new PeopleVulture();
+            nonagon.SetStats(5, 1, 3, 0, 2);
+            nonagon.displayStats();
+            Player playeer = new Player();
+            Combat(nonagon, playeer, 0);
+
             //Show em both
 
         }
     }
+
+    //Defines player object
+    public class Player
+    {
+        //Set health value
+        int health = 10;
+        //Returns health value
+        public int getHp()
+        {
+            return health;
+        }
+        //Calculates damange
+   
+        public bool damage(int damage)
+        {
+            health = health - damage;
+            if (health < 1) { return true; }
+            else
+            { return false; }
+        }
+    }
+
+    public abstract class Opponent
+    {
+        int healthPoints;
+        int attack;
+        int defense;
+        int special;
+        int element;
+        int temp;
+
+        public void SetStats(int healthPoints, int attack, int defense, int special, int element)
+        {
+            this.healthPoints = healthPoints;
+            this.attack = attack;
+            this.defense = defense;
+            this.special = special;
+            this.element = element;
+        }
+
+        public void displayStats()
+        {
+            MessageBox.Show("Health : " + healthPoints + " Attack  : " + attack + " Defense : " + defense + " Special : " + special + " Element : " + element);
+        }
+
+        public int Attack()
+        {
+            return attack;
+        }
+        public bool HealthVary(int damage)
+        {
+            if (defense > damage)
+            {
+                temp = defense;
+                defense = defense - 1;
+            }
+            healthPoints = healthPoints - (damage - defense);
+            defense = temp;
+            if (healthPoints < 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+
+            }
+        }
+
+      
+    }
+
+    public class PeopleVulture : Opponent
+    {
+
+    }
+
+
+    
 }
