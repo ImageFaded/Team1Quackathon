@@ -25,6 +25,9 @@ namespace Quackathon2017
         //Controls Character
         public void controlCharacter(object sender, KeyEventArgs e)
         {
+            ///Danial black lee les
+            ///Block lesss
+            //Maybe more
             while (true)
             {
                 switch (e.KeyCode)
@@ -39,6 +42,10 @@ namespace Quackathon2017
                         break;
                 }
             }
+        }
+        public int combat(object foe, object player, )
+        {
+
         }
     }
 }
