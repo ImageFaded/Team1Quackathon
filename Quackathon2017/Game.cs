@@ -40,5 +40,9 @@ namespace Quackathon2017
                 }
             }
         }
+        public int combat(object foe, object player, )
+        {
+
+        }
     }
 }
