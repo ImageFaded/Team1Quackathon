@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Quackathon2017
 {
-    public partial class Form1 : Form
+    public partial class Game : Form
     {
-        public Form1()
+        public Game()
         {
             //Test
             InitializeComponent();
