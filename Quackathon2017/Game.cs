@@ -10,27 +10,32 @@ using System.Windows.Forms;
 
 namespace Quackathon2017
 {
-    public partial class Form1 : Form
+    public partial class Game : Form
     {
-        public Form1()
+        
+        public Game()
         {
+            MaximizeBox = false;
+            PictureBox test = new PictureBox();
+            Size = new Size(500, 500);
+            test.Size = new Size(50, 50);
             InitializeComponent();
         }
 
         public void controlCharacter(object sender, KeyEventArgs e)
         {
-            while (true)
+            while(true)
             {
                 switch (e.KeyCode)
                 {
-                    case(Keys.Up):
+                    case(Keys.Up):                      
                         break;
                     case(Keys.Down):
                         break;
                     case(Keys.Left):
                         break;
                     case(Keys.Right):
-                        break;                       
+                        break;     
                 }
             }
         }
