@@ -12,6 +12,7 @@ namespace Quackathon2017
 {
     public partial class Game : Form
     {
+        //Initalises game
         public Game()
         {
             MaximizeBox = false;
@@ -21,6 +22,7 @@ namespace Quackathon2017
             test.Size = new Size(50, 50);
             InitializeComponent();
         }
+        //Controls Character
         public void controlCharacter(object sender, KeyEventArgs e)
         {
             while (true)
