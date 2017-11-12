@@ -29,42 +29,18 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Game));
-            this.foeBox = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
             this.foeHb = new System.Windows.Forms.Button();
             this.playHb = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.foeBox)).BeginInit();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.foeBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.foeBox)).BeginInit();
             this.SuspendLayout();
-            // 
-            // foeBox
-            // 
-            this.foeBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.foeBox.Image = global::Quackathon2017.Properties.Resources.peopleVulture1;
-            this.foeBox.InitialImage = ((System.Drawing.Image)(resources.GetObject("foeBox.InitialImage")));
-            this.foeBox.Location = new System.Drawing.Point(188, 2);
-            this.foeBox.Name = "foeBox";
-            this.foeBox.Size = new System.Drawing.Size(305, 234);
-            this.foeBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.foeBox.TabIndex = 0;
-            this.foeBox.TabStop = false;
-            this.foeBox.Visible = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::Quackathon2017.Properties.Resources.theGizardWizard;
-            this.pictureBox2.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.InitialImage")));
-            this.pictureBox2.Location = new System.Drawing.Point(0, 305);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(216, 168);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Visible = false;
             // 
             // button1
             // 
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.button1.Location = new System.Drawing.Point(386, 305);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(98, 168);
@@ -99,6 +75,31 @@
             this.playHb.UseVisualStyleBackColor = false;
             this.playHb.Visible = false;
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::Quackathon2017.Properties.Resources.theGizardWizard;
+            this.pictureBox2.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.InitialImage")));
+            this.pictureBox2.Location = new System.Drawing.Point(0, 305);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(216, 168);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 1;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.Visible = false;
+            // 
+            // foeBox
+            // 
+            this.foeBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.foeBox.Image = global::Quackathon2017.Properties.Resources.EVILman;
+            this.foeBox.InitialImage = ((System.Drawing.Image)(resources.GetObject("foeBox.InitialImage")));
+            this.foeBox.Location = new System.Drawing.Point(188, 2);
+            this.foeBox.Name = "foeBox";
+            this.foeBox.Size = new System.Drawing.Size(305, 234);
+            this.foeBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.foeBox.TabIndex = 0;
+            this.foeBox.TabStop = false;
+            this.foeBox.Visible = false;
+            // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -112,8 +113,8 @@
             this.Name = "Game";
             this.Text = "Game";
             this.Load += new System.EventHandler(this.Game_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.foeBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.foeBox)).EndInit();
             this.ResumeLayout(false);
 
         }

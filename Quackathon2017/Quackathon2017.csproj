@@ -89,5 +89,32 @@
   <ItemGroup>
     <None Include="Resources\peopleVulture1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\forrestTile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lordOfLightning.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Road_Train2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vegemite.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BigFigWasp.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EVILman.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\InvisbleFace.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Balrog.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Rattlesnake.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

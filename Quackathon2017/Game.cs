@@ -14,6 +14,9 @@ namespace Quackathon2017
     //Set up classes
     public partial class Game : Form
     {
+       /*  Button[,] tiles = new Button[15, 15]; //Create buttons for the target
+        int[,] solid = new int[15, 15]; //Array to store locations of overworld objects */
+
         Random randon = new Random();
 
         //int choice;
@@ -46,10 +49,14 @@ namespace Quackathon2017
 
         #region overworld
 
-        public void setUpGrid()
-        {
 
-        }
+
+
+
+
+
+
+
 
 #endregion
 
@@ -74,7 +81,7 @@ namespace Quackathon2017
         public Opponent getRanFoe()
         {
             if (randon.Next(0, 3) == 0) {return new RoadTrain(); }
-            else { return new PeopleVulture(); }
+            else { if (randon.Next(0, 2) == 0) { return new Vegemite(); } else {return new PeopleVulture(); } }
         }
 
         #region combatEngine
@@ -83,6 +90,7 @@ namespace Quackathon2017
         {
             //SET UP SCREEN FOR WOMBAT
             gameState = false;
+            foeBox.Image = oposition.icon;
             pictureBox2.Visible = true;
             foeBox.Visible = true;
             foeHb.Visible = true;
@@ -120,10 +128,7 @@ namespace Quackathon2017
             Spells newSpl;
             switch (e.Result.Text)
             {
-                case "say hello":
-                    MessageBox.Show("GENERAL KANOBI");
-                    recEngine.RecognizeAsyncStop();
-                    break;
+
                 case "regret existing":
                     MessageBox.Show("KILL YR SELF");
                     recEngine.RecognizeAsyncStop();
@@ -184,7 +189,7 @@ namespace Quackathon2017
             if (cast.getEffect() == 3)
             {
                 //Heal
-                playeer.damage(cast.getValue() * -1);
+                playeer.heal(cast.getValue() * -1);
             }
 
             if (kill == true)
@@ -226,7 +231,7 @@ namespace Quackathon2017
                 if (foeHolder.moves[moveChoice].effect == 0)
                 {
                     //GENERIC ATTACK
-                    deed = playeer.damage(foeHolder.moves[moveChoice].value);
+                    deed = playeer.damage(foeHolder.moves[moveChoice].value+foeHolder.Attack());
                 }
                 if (foeHolder.moves[moveChoice].effect == 1)
                 {
@@ -261,9 +266,13 @@ namespace Quackathon2017
             gameState = true;
         }
 
+
         #endregion
 
+        private void button2_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 
     #region objects
@@ -276,19 +285,46 @@ namespace Quackathon2017
 
         //Set health value
         int health = 10;
+        int mxHp = 10;
         //Returns health value
+        int x; int y;
+        int level = 1;
+        int xp = 0;
+        int defence = 2;
         public int getHp()
         {
             return health;
         }
         //Calculates damange
-   
+
         public bool damage(int damage)
         {
-            health = health - damage;
+            if ((health - damage + defence) < health)
+            {
+                health = (health - damage + defence);
+            }
+            else { health--; }
+            if (health > mxHp) { health = mxHp; }
             if (health < 1) { return true; }
             else
             { return false; }
+        }
+
+        public void heal(int damage)
+        {
+
+            health= health-damage;
+            if (health > mxHp) { health = mxHp; }
+        }
+        public void levelUp(int exp)
+        {
+            xp = xp+exp;
+            if (xp > ((6/5)^level + 100))
+            {
+                //Level Up
+                level++;
+                //Increase attack and defence and health
+            }
         }
     }
 
@@ -304,6 +340,7 @@ namespace Quackathon2017
         int special;
         string element;
         int temp;
+        public Image icon;
 
         public virtual void setUp()
         {
@@ -375,8 +412,19 @@ namespace Quackathon2017
         {
             moves[0] = new cry(); moves[1] = new generic(); moves[2] = new generic(); moves[3] = new cry();
             //Set my stats
-
+            icon = Quackathon2017.Properties.Resources.peopleVulture1;
             SetStats(5, 1, 3, 0, "vulture", "People Vulture");
+        }
+    }
+    public class BigFIgWasp : Opponent
+    {
+
+        public override void setUp()
+        {
+            moves[0] = new cry(); moves[1] = new generic(); moves[2] = new generic(); moves[3] = new cry();
+            //Set my stats
+            icon = Quackathon2017.Properties.Resources.peopleVulture1;
+            SetStats(3, 2, , 0, "Robot", "Big FIg Wasp");
         }
     }
     public class RoadTrain : Opponent
@@ -384,8 +432,28 @@ namespace Quackathon2017
         public override void setUp()
         {
             moves[0] = new Plough(); moves[1] = new FullSteamAhead(); moves[2] = new Horn(); moves[3] = new generic();
-
+            icon = Quackathon2017.Properties.Resources.Road_Train2;
             SetStats(8, 7, 2, 0, "robot", "ROAD TRAIN");
+        }
+    }
+
+    public class Vegemite : Opponent
+    {
+        public override void setUp()
+        {
+            //Change moves
+            moves[0] = new LidSpin(); moves[1] = new VegemiteToss(); moves[2] = new YeastBrew(); moves[3] = new generic();
+            icon = Quackathon2017.Properties.Resources.vegemite;
+            SetStats(9, 6, 3, 0, "Beast", "Vegemite");
+        }
+    }
+
+
+    public class lol : Opponent
+    {
+        public override void setUp()
+        {
+            SetStats(20, 6, 3, 0, "Lightning", "Lord of lightning");
         }
     }
 
@@ -443,6 +511,19 @@ namespace Quackathon2017
         }
     }
 
+    public class laser : Moves
+    {
+        public laser()
+        {
+            active = true;
+            name = "Laser";
+            effect = 0;
+            element = "Vulture";
+            value = 9;
+            cooldown = 5;
+        }
+    }
+
     public class Plough : Moves
     {
         public Plough()
@@ -478,7 +559,46 @@ namespace Quackathon2017
             effect = 1;
             value = 2;
             cooldown = 2;
+            element = "ROBOT";
 
+        }
+    }
+
+    public class LidSpin : Moves
+    {
+        public LidSpin()
+        {
+            active = true;
+            name = "LID SPIN";
+            effect = 1;
+            value = 2;
+            cooldown = 2;
+        }
+    }
+
+    public class VegemiteToss : Moves
+    {
+        public VegemiteToss()
+        {
+            active = true;
+            name = "VEGEMITE TOSS";
+            effect = 0;
+            value = 5;
+            cooldown = 3;
+        }
+    }
+
+
+    public class YeastBrew : Moves
+    {
+        public YeastBrew()
+        {
+            //Heals vegemite an amount of health
+            active = true;
+            name = "YEAST BREW";
+            effect = 3;
+            value = 2;
+            cooldown = 2;
         }
     }
 
@@ -553,7 +673,11 @@ namespace Quackathon2017
         }
     }
 
+
+
     #endregion
+
+
 
     #endregion
 
