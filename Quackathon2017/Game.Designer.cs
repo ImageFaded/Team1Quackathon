@@ -90,7 +90,7 @@
             // foeBox
             // 
             this.foeBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.foeBox.Image = global::Quackathon2017.Properties.Resources.EVILman;
+            this.foeBox.Image = global::Quackathon2017.Properties.Resources.Flying;
             this.foeBox.InitialImage = ((System.Drawing.Image)(resources.GetObject("foeBox.InitialImage")));
             this.foeBox.Location = new System.Drawing.Point(188, 2);
             this.foeBox.Name = "foeBox";

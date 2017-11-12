@@ -93,6 +93,16 @@ namespace Quackathon2017.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Flying {
+            get {
+                object obj = ResourceManager.GetObject("Flying", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap forrestTile {
             get {
                 object obj = ResourceManager.GetObject("forrestTile", resourceCulture);
@@ -116,6 +126,16 @@ namespace Quackathon2017.Properties {
         internal static System.Drawing.Bitmap lordOfLightning {
             get {
                 object obj = ResourceManager.GetObject("lordOfLightning", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap MysteryJack {
+            get {
+                object obj = ResourceManager.GetObject("MysteryJack", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

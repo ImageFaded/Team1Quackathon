@@ -28,7 +28,7 @@ namespace Quackathon2017
         private void Game_Load(object sender, EventArgs e)
         {
             Choices cmds = new Choices();
-            cmds.Add(new string[] { "say hello", "regret existing", "fire", "nuclear", "Lightning", "heal", "consider suicide"});
+            cmds.Add(new string[] { "say hello", "do nothing", "fire", "nuclear", "Lightning", "heal", "im in your mind", "yeast brew"});
             GrammarBuilder gBuild = new GrammarBuilder();
             gBuild.Append(cmds);
             Grammar gram = new Grammar(gBuild);
@@ -80,8 +80,46 @@ namespace Quackathon2017
 
         public Opponent getRanFoe()
         {
-            if (randon.Next(0, 3) == 0) {return new RoadTrain(); }
-            else { if (randon.Next(0, 2) == 0) { return new Vegemite(); } else {return new PeopleVulture(); } }
+            Random ramdomEnemy = new Random();
+            /*if (randon.Next(0, 3) == 0) {return new lol(); }
+            else { if (randon.Next(0, 2) == 0) { return new lol(); } else {return new lol(); } }*/
+            switch (randon.Next(0,9))
+            {
+                case 0:
+                    return new BigFIgWasp();
+                    break;
+                case 1:
+                    return new PeopleVulture();
+                    break;
+                case 2:
+                    return new FlyingMicrotonalBananah();
+                    break;
+                case 3:
+                    return new Rattlesnake();
+                    break;
+                case 4:
+                    return new EvilMan();
+                    break;
+                case 5:
+                    return new RoadTrain();
+                    break;
+                case 6:
+                    return new InvisibleFace();
+                    break;
+                case 7:
+                    return new Vegemite();
+                    break;
+                case 8:
+                    return new lol();
+                    break;
+                case 9:
+                    return new MysteryJack();
+                    break;
+                default:
+                    return null;
+                    break;
+            }
+            
         }
 
         #region combatEngine
@@ -98,14 +136,14 @@ namespace Quackathon2017
             button1.Enabled = false;
             //Done hiding objects
             foeHolder = oposition;
-            MessageBox.Show("Test1");
             updateHealth();
+            MessageBox.Show("Test 3");
             try
             {
                 recEngine.RecognizeAsync(RecognizeMode.Single);
             } catch (InvalidOperationException)
             {
-                MessageBox.Show("Stop hitting the start button so much!");
+                MessageBox.Show("Excessively pressing the start button does nothing");
             }
         }
 
@@ -124,13 +162,13 @@ namespace Quackathon2017
 
         private void reco(object sender, SpeechRecognizedEventArgs e)
         {
-            MessageBox.Show("TEST 3");
+            MessageBox.Show("You have done nothing");
             Spells newSpl;
             switch (e.Result.Text)
             {
 
-                case "regret existing":
-                    MessageBox.Show("KILL YR SELF");
+                case "do nothing":
+                    MessageBox.Show("You have done nothing");
                     recEngine.RecognizeAsyncStop();
                     foeTurn();
                     break;
@@ -139,11 +177,6 @@ namespace Quackathon2017
                     recEngine.RecognizeAsyncStop();
                     newSpl.setUp();
                     spellEffect(newSpl);
-                    break;
-                case "nuclear":
-                    MessageBox.Show("Nuclear");
-                    //Auto win round
-                    recEngine.RecognizeAsyncStop();
                     break;
                 case "Lightning":
                     newSpl = new lightningBolt();
@@ -157,8 +190,14 @@ namespace Quackathon2017
                     newSpl.setUp();
                     spellEffect(newSpl);
                     break;
-                case "consider suicide":
+                case "im in your mind":
                     newSpl = new MindCtrl();
+                    recEngine.RecognizeAsyncStop();
+                    newSpl.setUp();
+                    spellEffect(newSpl);
+                    break;
+                case "yeast brew":
+                    newSpl = new yeast();
                     recEngine.RecognizeAsyncStop();
                     newSpl.setUp();
                     spellEffect(newSpl);
@@ -169,12 +208,15 @@ namespace Quackathon2017
 
         public void spellEffect(Spells cast)
         {
-            MessageBox.Show("CAST :"+cast.getName());
+            MessageBox.Show("Cast :"+cast.getName());
             bool kill = false;
             if (cast.getEffect() == 0)
             {
                 //Damaging attac
-                kill = foeHolder.HealthVary(cast.getValue());
+                int dBonus = 0;
+                if (cast.getElement().Equals("Lightning") && foeHolder.getElement().Equals("Robot")) { dBonus = 4; }
+                if (cast.getElement().Equals("Fire") && foeHolder.getElement().Equals("Lightning")) { dBonus = 16; }
+                kill = foeHolder.HealthVary(cast.getValue()+dBonus);
             }
             if (cast.getEffect() == 1)
             {
@@ -194,6 +236,7 @@ namespace Quackathon2017
 
             if (kill == true)
             {
+                playeer.levelUp(foeHolder.exp);
                 endCombat();
             }
             else
@@ -209,8 +252,8 @@ namespace Quackathon2017
             bool deed = foeAttack();
             for (int i = 0; i < 4; i++)
             { foeHolder.moves[i].cool(); }
-            if (deed == true) { MessageBox.Show("YOU ARE DEED"); endCombat(); }
-            else {MessageBox.Show("CASE YOUR SP'EL"); nextTurn();  }
+            if (deed == true) { MessageBox.Show("You are dead"); Application.Exit();  }
+            else {MessageBox.Show("Cast your spell"); nextTurn();  }
 
         }
 
@@ -220,13 +263,13 @@ namespace Quackathon2017
             //Select attack
             //If random attack is usable, then perfomr it, else call foeAttack Again
             int moveChoice = randon.Next(0, 4);
-            if ((foeHolder.moves[0].checkUse() == false) && (foeHolder.moves[1].checkUse() == false) && (foeHolder.moves[2].checkUse() == false) && (foeHolder.moves[3].checkUse() == false)) { MessageBox.Show("THE PEOPLE VULTURE USED STRUGGLE"); deed = playeer.damage(1); }
+            if ((foeHolder.moves[0].checkUse() == false) && (foeHolder.moves[1].checkUse() == false) && (foeHolder.moves[2].checkUse() == false) && (foeHolder.moves[3].checkUse() == false)) { MessageBox.Show("THE "+foeHolder.getName()+" USED STRUGGLE"); deed = playeer.damage(1); }
                 if (foeHolder.moves[moveChoice].checkUse() == true  )
             {
                 //WE DO THE MOOOOVE
                 //DECLARE THE MOOOOVE
                 foeHolder.moves[moveChoice].timer = foeHolder.moves[moveChoice].cooldown;
-                MessageBox.Show("THE "+ foeHolder.getName() + " USED " + foeHolder.moves[moveChoice].name);
+                MessageBox.Show("The "+ foeHolder.getName() + " used " + foeHolder.moves[moveChoice].name);
                 //WE WORK OUT IT's EFFECT
                 if (foeHolder.moves[moveChoice].effect == 0)
                 {
@@ -248,8 +291,14 @@ namespace Quackathon2017
                     //HEAL SATAN
                     foeHolder.HealthVary(-1*(foeHolder.moves[moveChoice].value));
                 }
+                if (foeHolder.moves[moveChoice].effect == 4)
+                {
+                    //HEAL SATAN
+                    foeHolder.attackC(foeHolder.moves[moveChoice].value);
+                    deed = playeer.damage(foeHolder.moves[moveChoice].value + foeHolder.Attack());
+                }
             }
-            else { MessageBox.Show("ARE WE STUCK FOREVER?"); deed = foeAttack(); }
+            else { deed = foeAttack(); }
             return deed;
         }
 
@@ -257,7 +306,7 @@ namespace Quackathon2017
 
         public void endCombat()
         {
-            MessageBox.Show("COMBAT OVER");
+            MessageBox.Show("Combat over");
             pictureBox2.Visible = false;
             foeBox.Visible = false;
             foeHb.Visible = false;
@@ -284,13 +333,13 @@ namespace Quackathon2017
     {
 
         //Set health value
-        int health = 10;
-        int mxHp = 10;
+        int health = 20;
+        int mxHp = 20;
         //Returns health value
         int x; int y;
         int level = 1;
         int xp = 0;
-        int defence = 2;
+        int defence = 6;
         public int getHp()
         {
             return health;
@@ -319,10 +368,15 @@ namespace Quackathon2017
         public void levelUp(int exp)
         {
             xp = xp+exp;
-            if (xp > ((6/5)^level + 100))
+            if (xp > ((6/5)^level))
+            MessageBox.Show("" + xp);
+
             {
                 //Level Up
+                MessageBox.Show("Level Up!");
                 level++;
+                mxHp = mxHp + 4;
+                defence = defence + 2;
                 //Increase attack and defence and health
             }
         }
@@ -340,6 +394,7 @@ namespace Quackathon2017
         int special;
         string element;
         int temp;
+        public int exp;
         public Image icon;
 
         public virtual void setUp()
@@ -372,13 +427,9 @@ namespace Quackathon2017
         }
         public bool HealthVary(int damage)
         {
-            if (defense > damage)
-            {
-                temp = defense;
-                defense = defense - 1;
-            }
-            healthPoints = healthPoints - (damage - defense);
-            defense = temp;
+            int newDam = damage - defense;
+            if (newDam < 1) newDam = 1;
+            healthPoints = healthPoints - newDam;
             if (healthPoints < 1)
             {
                 return true;
@@ -401,16 +452,20 @@ namespace Quackathon2017
         {
             return healthPoints;
         }
+        public string getElement()
+        {
+            return element;
+        }
     }
 
 
 
     public class PeopleVulture : Opponent
     {
-
+        int exp = 3;
         public override void setUp()
         {
-            moves[0] = new cry(); moves[1] = new generic(); moves[2] = new generic(); moves[3] = new cry();
+            moves[0] = new cry(); moves[1] = new generic(); moves[2] = new generic(); moves[3] = new laser();
             //Set my stats
             icon = Quackathon2017.Properties.Resources.peopleVulture1;
             SetStats(5, 1, 3, 0, "vulture", "People Vulture");
@@ -418,17 +473,51 @@ namespace Quackathon2017
     }
     public class BigFIgWasp : Opponent
     {
-
+        int exp = 4;
         public override void setUp()
         {
             moves[0] = new cry(); moves[1] = new generic(); moves[2] = new generic(); moves[3] = new cry();
             //Set my stats
-            icon = Quackathon2017.Properties.Resources.peopleVulture1;
-            SetStats(3, 2, , 0, "Robot", "Big FIg Wasp");
+            icon = Quackathon2017.Properties.Resources.BigFigWasp;
+            SetStats(3, 2, 3, 0, "Robot", "Big FIg Wasp");
+        }
+    }
+    public class FlyingMicrotonalBananah : Opponent
+    {
+        int exp = 2;
+        public override void setUp()
+        {
+            moves[0] = new cry(); moves[1] = new Microtone(); moves[2] = new Microtone(); moves[3] = new cry();
+            //Set my stats
+            icon = Quackathon2017.Properties.Resources.Flying;
+            SetStats(2, 4, 1, 0, "Robot", "Flying Microtonal Bananah");
+        }
+    }
+    public class Rattlesnake : Opponent
+    {
+        int exp = 4;
+        public override void setUp()
+        {
+            moves[0] = new Bite(); moves[1] = new rattle(); moves[2] = new Microtone(); moves[3] = new rattle();
+            //Set my stats
+            icon = Quackathon2017.Properties.Resources.Rattlesnake;
+            SetStats(7, 2, 5, 0, "Beast", "Rattlesnake");
+        }
+    }
+    public class EvilMan : Opponent
+    {
+        int exp = 5;
+        public override void setUp()
+        {
+            moves[0] = new generic(); moves[1] = new EvilFace(); moves[2] = new FireEn(); moves[3] = new FireEn();
+            //Set my stats
+            icon = Quackathon2017.Properties.Resources.EVILman;
+            SetStats(3, 6, 2, 0, "Fire", "Evil Man");
         }
     }
     public class RoadTrain : Opponent
     {
+        int exp = 3;
         public override void setUp()
         {
             moves[0] = new Plough(); moves[1] = new FullSteamAhead(); moves[2] = new Horn(); moves[3] = new generic();
@@ -436,9 +525,31 @@ namespace Quackathon2017
             SetStats(8, 7, 2, 0, "robot", "ROAD TRAIN");
         }
     }
+    public class InvisibleFace : Opponent
+    {
+        int exp = 6;
+        public override void setUp()
+        {
+            moves[0] = new EvilFace(); moves[1] = new Bite(); moves[2] = new EvilFace(); moves[3] = new YeastBrew();
+            icon = Quackathon2017.Properties.Resources.InvisbleFace;
+            SetStats(10, 5, 12, 0, "Vulture", "InvisibleFace");
+        }
+    }
+
+    public class MysteryJack : Opponent
+    {
+        int exp = 8;
+        public override void setUp()
+        {
+            moves[0] = new EvilFace(); moves[1] = new Bite(); moves[2] = new EvilFace(); moves[3] = new laser();
+            icon = Quackathon2017.Properties.Resources.MysteryJack;
+            SetStats(10, 7, 10, 0, "Robot", "Mystery Jack");
+        }
+    }
 
     public class Vegemite : Opponent
     {
+        int exp = 5;
         public override void setUp()
         {
             //Change moves
@@ -451,9 +562,12 @@ namespace Quackathon2017
 
     public class lol : Opponent
     {
+        int exp = 10;
         public override void setUp()
         {
-            SetStats(20, 6, 3, 0, "Lightning", "Lord of lightning");
+            moves[0] = new Lightning(); moves[1] = new ThunderClouds(); moves[2] = new Catotails(); moves[3] = new Lightning();
+            icon = Quackathon2017.Properties.Resources.lordOfLightning;
+            SetStats(20, 15, 7, 0, "Lightning", "Lord of lightning");
         }
     }
 
@@ -486,6 +600,18 @@ namespace Quackathon2017
 
     }
 
+    public class ThunderClouds : Moves
+    {
+        public ThunderClouds()
+        {
+            active = true;
+            name = "ThunderClouds";
+            effect = 1;
+            element = "Lightning";
+            value = 4;
+            cooldown = 3;
+        }
+    }
     public class cry : Moves
     {
         public cry()
@@ -496,6 +622,55 @@ namespace Quackathon2017
             element = "Vulture";
             value = 2;
             cooldown = 2;
+        }
+    }
+    public class Lightning : Moves
+    {
+        public Lightning()
+        {
+            active = true;
+            name = "Lightning";
+            effect = 0;
+            element = "Lightning";
+            value = 4;
+            cooldown = 1;
+        }
+    }
+    public class Catotails : Moves
+    {
+        public Catotails()
+        {
+            active = true;
+            name = "Cat o tails";
+            effect = 0;
+            element = "Lightning";
+            value = 3;
+            cooldown = 4;
+        }
+    }
+
+    public class EvilFace : Moves
+    {
+        public EvilFace()
+        {
+            active = true;
+            name = "Evil Face";
+            effect = 1;
+            element = "Robot";
+            value = 2;
+            cooldown = 1;
+        }
+    }
+    public class rattle : Moves
+    {
+        public rattle()
+        {
+            active = true;
+            name = "Rattle";
+            effect = 2;
+            element = "Beast";
+            value = 1;
+            cooldown = 1;
         }
     }
     public class generic : Moves
@@ -511,6 +686,31 @@ namespace Quackathon2017
         }
     }
 
+    public class FireEn : Moves
+    {
+        public FireEn()
+        {
+            active = true;
+            name = "Fire";
+            effect = 0;
+            element = "Fire";
+            value = 4;
+            cooldown = 1;
+        }
+    }
+
+    public class Bite : Moves
+    {
+        public Bite()
+        {
+            active = true;
+            name = "Bite";
+            effect = 4;
+            element = "Beast";
+            value = 4;
+            cooldown = 1;
+        }
+    }
     public class laser : Moves
     {
         public laser()
@@ -520,6 +720,18 @@ namespace Quackathon2017
             effect = 0;
             element = "Vulture";
             value = 9;
+            cooldown = 5;
+        }
+    }
+    public class Microtone : Moves
+    {
+        public Microtone()
+        {
+            active = true;
+            name = "Microtone";
+            effect = 0;
+            element = "Robot";
+            value = 4;
             cooldown = 5;
         }
     }
@@ -559,7 +771,7 @@ namespace Quackathon2017
             effect = 1;
             value = 2;
             cooldown = 2;
-            element = "ROBOT";
+            element = "Robot";
 
         }
     }
@@ -569,7 +781,7 @@ namespace Quackathon2017
         public LidSpin()
         {
             active = true;
-            name = "LID SPIN";
+            name = "Lid Spin";
             effect = 1;
             value = 2;
             cooldown = 2;
@@ -581,7 +793,7 @@ namespace Quackathon2017
         public VegemiteToss()
         {
             active = true;
-            name = "VEGEMITE TOSS";
+            name = "Vegemite Toss";
             effect = 0;
             value = 5;
             cooldown = 3;
@@ -595,7 +807,7 @@ namespace Quackathon2017
         {
             //Heals vegemite an amount of health
             active = true;
-            name = "YEAST BREW";
+            name = "Yeast Brew";
             effect = 3;
             value = 2;
             cooldown = 2;
@@ -620,7 +832,6 @@ namespace Quackathon2017
         }
         public string getName()
         {
-            MessageBox.Show("AM I BEING CALLED?");
 
             return name;
         }
@@ -647,7 +858,7 @@ namespace Quackathon2017
     {
         public override void setUp()
         {
-            setVals("FIREBALL", 0, "FIRE", 5);
+            setVals("Fireball", 0, "Fire", 6);
         }
     }
     public class lightningBolt : Spells
@@ -661,7 +872,15 @@ namespace Quackathon2017
     {
         public override void setUp()
         {
-            setVals("HEAL", 3, "N/A", 3);
+            setVals("Heak", 3, "N/A", 3);
+        }
+    }
+
+    public class yeast : Spells
+    {
+        public override void setUp()
+        {
+            setVals("yeast brew", 3, "N/A", 10);
         }
     }
 
@@ -669,7 +888,7 @@ namespace Quackathon2017
     {
         public override void setUp()
         {
-            setVals("Mind Cntrl", 0, "VULTURE", 20);
+            setVals("Mind Cntrl", 0, "Vulture", 20);
         }
     }
 
